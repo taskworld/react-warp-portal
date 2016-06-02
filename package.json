@@ -18,7 +18,9 @@
     "test:watch": "nwb test --server",
     "prepublish": "npm run build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "positioning-strategy": "^2.0.0"
+  },
   "peerDependencies": {
     "react": "15.x"
   },
