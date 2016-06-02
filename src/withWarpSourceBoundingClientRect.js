@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const withWarpSourceParentBoundingClientRect = (BaseComponent) => React.createClass({
+export const withWarpSourceBoundingClientRect = (BaseComponent) => React.createClass({
   contextTypes: {
     warpSource: React.PropTypes.object
   },
@@ -18,9 +18,8 @@ export const withWarpSourceParentBoundingClientRect = (BaseComponent) => React.c
     this.reposition()
   },
   reposition () {
-    const element = this.context.warpSource
-    const parentNode = element && element.parentNode
-    const parentBoundingClientRect = parentNode && parentNode.getBoundingClientRect() || { }
+    const sourceNode = this.context.warpSource
+    const boundingClientRect = sourceNode && sourceNode.getBoundingClientRect() || { }
     const {
       top = 0,
       left = 0,
@@ -28,7 +27,7 @@ export const withWarpSourceParentBoundingClientRect = (BaseComponent) => React.c
       height = 0,
       bottom = 0,
       right = 0
-    } = parentBoundingClientRect
+    } = boundingClientRect
     if (
       this.state.top !== top ||
       this.state.left !== left ||
@@ -43,7 +42,9 @@ export const withWarpSourceParentBoundingClientRect = (BaseComponent) => React.c
   render () {
     return <BaseComponent
       {...this.props}
-      warpSourceParentBoundingClientRect={this.state}
+      warpSourceBoundingClientRect={this.state}
     />
   }
 })
+
+export default withWarpSourceBoundingClientRect

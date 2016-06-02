@@ -43,12 +43,17 @@ import { WarpPortal } from './warp'
 // ...
   render () {
     return <div>
-      This displays here.
-      <WarpPortal>This displays at the WarpDestination.</WarpPortal>
+      <WarpPortal content={<div>This displays at the WarpDestination.</div>}>
+        <p>This displays here.</p>
+      </WarpPortal>
     </div>
   }
 // ...
 ```
+
+The rendered content is entangled with the WarpSource.
+You can access `this.context.warpSource` to obtain the DOM node.
+This allows positioning such as tooltips.
 
 
 [build-badge]: https://img.shields.io/travis/taskworld/react-warp-portal/master.svg?style=flat-square

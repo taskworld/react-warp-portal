@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { createWarp, popupWithWarpPortal } from '../../src'
+import { createWarp, popup } from '../../src'
 
 const { WarpPortal, WarpDestination } = createWarp()
 
@@ -28,8 +28,7 @@ const Menu = React.createClass({
   }
 })
 
-const PopupMenu = popupWithWarpPortal(WarpPortal)(Menu)
-
+const PopupMenu = popup(Menu)
 const MenuItem = ({ children }) => <div>{children}</div>
 
 const Demo = React.createClass({
@@ -45,21 +44,18 @@ const Demo = React.createClass({
         <h1>react-warp-portal Demo</h1>
         <div style={{ padding: 16, border: '2px solid #cba' }}>
           <h2>WarpPortal</h2>
-          <p>Anything that gets rendered into WarpPortal will be mounted at WarpDestination!</p>
-          <WarpPortal>Hello world!!!</WarpPortal>
+          <WarpPortal content={<p>Hello world!!!</p>}>
+            <p>Anything that gets rendered into WarpPortal will be mounted at WarpDestination!</p>
+          </WarpPortal>
 
           <h3>Applications of a WarpPortal</h3>
           <p>For instance, you can use it to create a popup menu.</p>
           <div style={{ width: 200, height: 200, overflow: 'auto', background: '#e1e2e3' }}>
             This div has <code>{'{ overflow: auto; }'}</code> CSS property set.
             This means that you cannot render a popup menu directly here, because it will be cropped inside the scrollable area.
-            <span>
+            <WarpPortal content={this.state.menu ? <PopupMenu strategy='top left' gap={4} /> : null}>
               <button onClick={this.onButtonClick}>Toggle menu!</button>
-              {this.state.menu
-                ? <PopupMenu strategy='top left' gap={6} />
-                : null
-              }
-            </span>
+            </WarpPortal>
           </div>
         </div>
         <div style={{ padding: 16, border: '2px solid #abc' }}>

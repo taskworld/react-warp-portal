@@ -13,7 +13,8 @@ export function createWarp () {
 
   const WarpPortal = React.createClass({
     propTypes: {
-      children: React.PropTypes.node
+      children: React.PropTypes.node,
+      content: React.PropTypes.node
     },
     getInitialState () {
       const id = 'warp' + (_nextId++)
@@ -21,14 +22,14 @@ export function createWarp () {
     },
     componentDidMount () {
       activeInstances[this.state.id] = {
-        children: this.props.children,
+        children: this.props.content,
         element: ReactDOM.findDOMNode(this)
       }
       window.requestAnimationFrame(refresh)
     },
     componentDidUpdate () {
       activeInstances[this.state.id] = {
-        children: this.props.children,
+        children: this.props.content,
         element: ReactDOM.findDOMNode(this)
       }
       refresh()
@@ -38,9 +39,10 @@ export function createWarp () {
       refresh()
     },
     render () {
-      return (
-        <span className='WarpPortal' style={{ display: 'none' }}></span>
-      )
+      if (!this.props.children || React.Children.count(this.props.children) === 0) {
+        return <span style={{ display: 'none' }}></span>
+      }
+      return React.Children.only(this.props.children)
     }
   })
 
