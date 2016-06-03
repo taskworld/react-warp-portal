@@ -50,7 +50,7 @@ export function createWarp () {
   const WarpOutPortal = React.createClass({
     propTypes: {
       children: React.PropTypes.node,
-      warpId: React.PropTypes.warpId
+      warpId: React.PropTypes.string
     },
     childContextTypes: {
       warpSource: React.PropTypes.object
