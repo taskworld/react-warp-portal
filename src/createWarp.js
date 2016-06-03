@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+let _nextId = 1
+
 // Creates a tangled pair of overlay.
 export function createWarp () {
   const activeInstances = { }
-  let _nextId = 1
   let _destinations = [ ]
 
   function refresh () {
@@ -40,7 +41,7 @@ export function createWarp () {
     },
     render () {
       if (!this.props.children || React.Children.count(this.props.children) === 0) {
-        return <span style={{ display: 'none' }}></span>
+        return <span className='WarpPortal' data-warp-id={this.state.id} style={{ display: 'none' }}></span>
       }
       return React.Children.only(this.props.children)
     }
@@ -48,7 +49,8 @@ export function createWarp () {
 
   const WarpOutPortal = React.createClass({
     propTypes: {
-      children: React.PropTypes.node
+      children: React.PropTypes.node,
+      warpId: React.PropTypes.warpId
     },
     childContextTypes: {
       warpSource: React.PropTypes.object
@@ -61,7 +63,7 @@ export function createWarp () {
     },
     render () {
       return (
-        <div className='Warp'>
+        <div className='Warp' data-warp-id={this.props.warpId}>
           {this.props.children}
         </div>
       )
@@ -79,7 +81,7 @@ export function createWarp () {
       const children = [ ]
       for (let key in activeInstances) {
         children.push(
-          <WarpOutPortal key={key} warpSource={activeInstances[key].element}>
+          <WarpOutPortal key={key} warpSource={activeInstances[key].element} warpId={key}>
             {activeInstances[key].children}
           </WarpOutPortal>
         )
