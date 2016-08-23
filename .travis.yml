@@ -13,6 +13,7 @@ after_success:
 branches:
   only:
   - master
+  - /v\d+\.\d+[a-z]/
 deploy:
   provider: npm
   email: thai.p+bot@taskworld.com
