@@ -7,8 +7,10 @@ let _nextId = 1
 export function createWarp () {
   const activeInstances = { }
   let _destinations = [ ]
+  let _refreshQueued = false
 
   function refresh () {
+    _refreshQueued = false
     _destinations.forEach(instance => instance.forceUpdate())
   }
 
@@ -22,22 +24,31 @@ export function createWarp () {
       return { id }
     },
     componentDidMount () {
-      activeInstances[this.state.id] = {
-        children: this.props.content,
-        element: ReactDOM.findDOMNode(this)
+      if (this.props.content) {
+        activeInstances[this.state.id] = {
+          children: this.props.content,
+          element: ReactDOM.findDOMNode(this)
+        }
+        if (!_refreshQueued) {
+          _refreshQueued = true
+          window.requestAnimationFrame(refresh)
+        }
       }
-      window.requestAnimationFrame(refresh)
     },
     componentDidUpdate () {
-      activeInstances[this.state.id] = {
-        children: this.props.content,
-        element: ReactDOM.findDOMNode(this)
+      if (this.props.content || activeInstances[this.state.id]) {
+        activeInstances[this.state.id] = {
+          children: this.props.content,
+          element: ReactDOM.findDOMNode(this)
+        }
+        refresh()
       }
-      refresh()
     },
     componentWillUnmount () {
-      delete activeInstances[this.state.id]
-      refresh()
+      if (activeInstances[this.state.id]) {
+        delete activeInstances[this.state.id]
+        refresh()
+      }
     },
     render () {
       if (!this.props.children || React.Children.count(this.props.children) === 0) {
