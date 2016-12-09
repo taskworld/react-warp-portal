@@ -19,7 +19,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "positioning-strategy": "^2.0.0"
+    "positioning-strategy": "^2.1.0"
   },
   "peerDependencies": {
     "react": "15.x"
