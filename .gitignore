@@ -1,6 +1,7 @@
 /coverage
 /demo/dist
 /es6
+/es
 /lib
 /node_modules
 /umd
@@ -38,7 +39,8 @@ node_modules
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*

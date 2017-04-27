@@ -12,9 +12,16 @@ export const popup = (BaseComponent) => (
         React.PropTypes.func
       ]),
       gap: React.PropTypes.number,
-
+      bindingY: React.PropTypes.oneOf([
+        'top', 'bottom'
+      ]),
       // from withWarpSourceBoundingClientRect
       warpSourceBoundingClientRect: React.PropTypes.object
+    },
+    getDefaultProps () {
+      return {
+        bindingY: 'top'
+      }
     },
     getInitialState () {
       return { left: 0, top: 0, calculated: false }
@@ -51,16 +58,23 @@ export const popup = (BaseComponent) => (
       }
     },
     render () {
+      const getBottomPositionFromTop = (top, element) => {
+        const childRect = ReactDOM.findDOMNode(element).getBoundingClientRect()
+        return (window.innerHeight - this.state.top - childRect.height)
+      }
       const { strategy, gap, warpSourceParentBoundingClientRect, ...props } = this.props
+      const yAxis = this.props.bindingY === 'top' || !this.state.calculated ?
+        { top: this.state.top } :
+        { bottom: getBottomPositionFromTop(this.state.top, this) }
       void (strategy, gap, warpSourceParentBoundingClientRect)
       return (
         <div
           style={{
             position: 'fixed',
             left: this.state.left,
-            top: this.state.top,
             opacity: this.state.calculated ? 1 : 0,
-            pointerEvents: this.state.calculated ? '' : 'none'
+            pointerEvents: this.state.calculated ? '' : 'none',
+            ...yAxis
           }}
         >
           <BaseComponent {...props} onRepositionNeeded={this.reposition} />
