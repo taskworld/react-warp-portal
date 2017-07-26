@@ -25,7 +25,7 @@
     "react": "15.x"
   },
   "devDependencies": {
-    "nwb": "0.10.x",
+    "nwb": "0.18.9",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "standard": "^7.1.1"
