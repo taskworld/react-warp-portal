@@ -17,13 +17,13 @@ export const popup = (BaseComponent) => (
       ]),
       // from withWarpSourceBoundingClientRect
       warpSourceBoundingClientRect: PropTypes.object
-    };
+    }
 
     static defaultProps = {
       bindingY: 'top'
-    };
+    }
 
-    state = { left: 0, top: 0, calculated: false };
+    state = { left: 0, top: 0, calculated: false }
 
     componentDidMount() {
       window.requestAnimationFrame(this.reposition)
@@ -59,7 +59,7 @@ export const popup = (BaseComponent) => (
       ) {
         this.setState(targetState)
       }
-    };
+    }
 
     render() {      
       const getBottomPositionFromTop = (top) => {    
