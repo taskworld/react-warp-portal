@@ -63,7 +63,7 @@ export const popup = (BaseComponent) => (
 
     render() {
       const getBottomPositionFromTop = (top) => {
-        const childRect = popup.getBoundingClientRect()
+        const childRect = this.popup.getBoundingClientRect()
         return (window.innerHeight - this.state.top - childRect.height)
       }
       const { strategy, gap, warpSourceParentBoundingClientRect, ...props } = this.props
