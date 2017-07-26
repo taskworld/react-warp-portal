@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom'
 import withWarpSourceBoundingClientRect from './withWarpSourceBoundingClientRect'
 
 export const popup = (BaseComponent) => (
-  withWarpSourceBoundingClientRect(React.createClass({
-    propTypes: {
+  withWarpSourceBoundingClientRect(class extends React.Component {
+    static propTypes = {
       strategy: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.func
@@ -17,26 +17,29 @@ export const popup = (BaseComponent) => (
       ]),
       // from withWarpSourceBoundingClientRect
       warpSourceBoundingClientRect: React.PropTypes.object
-    },
-    getDefaultProps () {
-      return {
-        bindingY: 'top'
-      }
-    },
-    getInitialState () {
-      return { left: 0, top: 0, calculated: false }
-    },
-    componentDidMount () {
+    };
+
+    static defaultProps = {
+      bindingY: 'top'
+    };
+
+    state = { left: 0, top: 0, calculated: false };
+
+    componentDidMount() {
       window.requestAnimationFrame(this.reposition)
       window.addEventListener('resize', this.reposition)
-    },
-    componentWillUnmount () {
+      this.popup = ReactDOM.findDOMNode(element)
+    }
+
+    componentWillUnmount() {
       window.removeEventListener('resize', this.reposition)
-    },
-    componentDidUpdate () {
+    }
+
+    componentDidUpdate() {
       this.reposition()
-    },
-    reposition () {
+    }
+
+    reposition = () => {
       const parentRect = this.props.warpSourceBoundingClientRect
       if (parentRect.width === 0 && parentRect.height === 0) {
         return
@@ -56,16 +59,17 @@ export const popup = (BaseComponent) => (
       ) {
         this.setState(targetState)
       }
-    },
-    render () {
-      const getBottomPositionFromTop = (top, element) => {
-        const childRect = ReactDOM.findDOMNode(element).getBoundingClientRect()
+    };
+
+    render() {
+      const getBottomPositionFromTop = (top) => {
+        const childRect = popup.getBoundingClientRect()
         return (window.innerHeight - this.state.top - childRect.height)
       }
       const { strategy, gap, warpSourceParentBoundingClientRect, ...props } = this.props
       const yAxis = this.props.bindingY === 'top' || !this.state.calculated ?
         { top: this.state.top } :
-        { bottom: getBottomPositionFromTop(this.state.top, this) }
+        { bottom: getBottomPositionFromTop(this.state.top) }
       void (strategy, gap, warpSourceParentBoundingClientRect)
       return (
         <div
@@ -81,7 +85,8 @@ export const popup = (BaseComponent) => (
         </div>
       )
     }
-  }))
+  })
 )
 
 export default popup
+

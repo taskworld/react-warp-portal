@@ -1,23 +1,26 @@
 import React from 'react'
 
-export const withWarpSourceBoundingClientRect = (BaseComponent) => React.createClass({
-  contextTypes: {
+export const withWarpSourceBoundingClientRect = (BaseComponent) => class extends React.Component {
+  static contextTypes = {
     warpSource: React.PropTypes.object
-  },
-  getInitialState () {
-    return { top: 0, left: 0, width: 0, height: 0, bottom: 0, right: 0 }
-  },
-  componentDidMount () {
+  };
+
+  state = { top: 0, left: 0, width: 0, height: 0, bottom: 0, right: 0 };
+
+  componentDidMount() {
     window.requestAnimationFrame(this.reposition)
     window.addEventListener('resize', this.reposition)
-  },
-  componentWillUnmount () {
+  }
+
+  componentWillUnmount() {
     window.removeEventListener('resize', this.reposition)
-  },
-  componentDidUpdate () {
+  }
+
+  componentDidUpdate() {
     this.reposition()
-  },
-  reposition () {
+  }
+
+  reposition = () => {
     const sourceNode = this.context.warpSource
     const boundingClientRect = sourceNode && sourceNode.getBoundingClientRect() || { }
     const {
@@ -38,13 +41,14 @@ export const withWarpSourceBoundingClientRect = (BaseComponent) => React.createC
     ) {
       this.setState({ top, left, width, height, bottom, right })
     }
-  },
-  render () {
+  };
+
+  render() {
     return <BaseComponent
       {...this.props}
       warpSourceBoundingClientRect={this.state}
     />
   }
-})
+}
 
 export default withWarpSourceBoundingClientRect

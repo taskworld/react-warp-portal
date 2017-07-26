@@ -14,16 +14,19 @@ export function createWarp () {
     _destinations.forEach(instance => instance.forceUpdate())
   }
 
-  const WarpPortal = React.createClass({
-    propTypes: {
+  class WarpPortal extends React.Component {
+    static propTypes = {
       children: React.PropTypes.node,
       content: React.PropTypes.node
-    },
-    getInitialState () {
+    };
+
+    constructor(props) {
+      super(props);
       const id = 'warp' + (_nextId++)
-      return { id }
-    },
-    componentDidMount () {
+      this.state = { id };
+    }
+
+    componentDidMount() {
       if (this.props.content) {
         activeInstances[this.state.id] = {
           children: this.props.content,
@@ -34,8 +37,9 @@ export function createWarp () {
           window.requestAnimationFrame(refresh)
         }
       }
-    },
-    componentDidUpdate () {
+    }
+
+    componentDidUpdate() {
       if (this.props.content || activeInstances[this.state.id]) {
         activeInstances[this.state.id] = {
           children: this.props.content,
@@ -43,52 +47,60 @@ export function createWarp () {
         }
         refresh()
       }
-    },
-    componentWillUnmount () {
+    }
+
+    componentWillUnmount() {
       if (activeInstances[this.state.id]) {
         delete activeInstances[this.state.id]
         refresh()
       }
-    },
-    render () {
+    }
+
+    render() {
       if (!this.props.children || React.Children.count(this.props.children) === 0) {
         return <span className='WarpPortal' data-warp-id={this.state.id} style={{ display: 'none' }}></span>
       }
       return React.Children.only(this.props.children)
     }
-  })
+  }
 
-  const WarpOutPortal = React.createClass({
-    propTypes: {
+  class WarpOutPortal extends React.Component {
+    static propTypes = {
       children: React.PropTypes.node,
       warpId: React.PropTypes.string
-    },
-    childContextTypes: {
+    };
+
+    static childContextTypes = {
       warpSource: React.PropTypes.object
-    },
-    getChildContext () {
+    };
+
+    getChildContext() {
       return { warpSource: this.props.warpSource }
-    },
-    shouldComponentUpdate (nextProps) {
+    }
+
+    shouldComponentUpdate(nextProps) {
       return nextProps.children !== this.props.children
-    },
-    render () {
+    }
+
+    render() {
       return (
         <div className='Warp' data-warp-id={this.props.warpId}>
           {this.props.children}
         </div>
       )
     }
-  })
+  }
 
-  const WarpDestination = React.createClass({
-    componentDidMount () {
+  class WarpDestination extends React.Component {
+    componentDidMount() {
       _destinations.push(this)
-    },
-    componentWillUnmount () {
+    }
+
+    componentWillUnmount() {
       _destinations = _destinations.filter((instance) => instance !== this)
-    },
-    render () {
+    }
+
+    render() {
       const children = [ ]
       for (let key in activeInstances) {
         children.push(
@@ -103,7 +115,7 @@ export function createWarp () {
         </div>
       )
     }
-  })
+  }
 
   return { WarpPortal, WarpDestination }
 }
