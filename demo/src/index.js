@@ -37,7 +37,7 @@ class Demo extends React.Component {
 
   onButtonClick = () => {
     this.setState(state => ({ menu: !state.menu }))
-  };
+  }
 
   render() {
     return (
