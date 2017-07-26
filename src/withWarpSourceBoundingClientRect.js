@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 
 export const withWarpSourceBoundingClientRect = (BaseComponent) => class extends React.Component {
   static contextTypes = {
-    warpSource: React.PropTypes.object
+    warpSource: PropTypes.object
   };
 
   state = { top: 0, left: 0, width: 0, height: 0, bottom: 0, right: 0 };

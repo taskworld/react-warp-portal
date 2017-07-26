@@ -5,14 +5,14 @@ import { createWarp, popup } from '../../src'
 
 const { WarpPortal, WarpDestination } = createWarp()
 
-const Menu = React.createClass({
-  getInitialState () {
-    return { items: [ 'Hello!', 'World!!' ] }
-  },
-  componentDidUpdate () {
+class Menu extends React.Component {
+  state = { items: [ 'Hello!', 'World!!' ] };
+
+  componentDidUpdate() {
     this.props.onRepositionNeeded()
-  },
-  render () {
+  }
+
+  render() {
     return (
       <div style={{ border: '2px solid #543', background: '#faf9f8' }}>
         <MenuItem>Lorem ipsum dolor sit amet</MenuItem>
@@ -20,25 +20,26 @@ const Menu = React.createClass({
         <MenuItem><a href='javascript://' onClick={this.moar}>Add new item!!</a></MenuItem>
       </div>
     )
-  },
-  moar () {
+  }
+
+  moar = () => {
     this.setState(state => ({
       items: [ ...state.items, 'New item ' + new Date() ]
     }))
-  }
-})
+  };
+}
 
 const PopupMenu = popup(Menu)
 const MenuItem = ({ children }) => <div>{children}</div>
 
-const Demo = React.createClass({
-  getInitialState () {
-    return { menu: false }
-  },
-  onButtonClick () {
+class Demo extends React.Component {
+  state = { menu: false };
+
+  onButtonClick = () => {
     this.setState(state => ({ menu: !state.menu }))
-  },
-  render () {
+  };
+
+  render() {
     return (
       <div>
         <h1>react-warp-portal Demo</h1>
@@ -66,6 +67,6 @@ const Demo = React.createClass({
       </div>
     )
   }
-})
+}
 
 render(<Demo />, document.querySelector('#demo'))
