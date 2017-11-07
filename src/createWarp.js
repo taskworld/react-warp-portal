@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 let _nextId = 1
 
@@ -16,8 +17,8 @@ export function createWarp () {
 
   const WarpPortal = React.createClass({
     propTypes: {
-      children: React.PropTypes.node,
-      content: React.PropTypes.node
+      children: PropTypes.node,
+      content: PropTypes.node
     },
     getInitialState () {
       const id = 'warp' + (_nextId++)
@@ -60,11 +61,11 @@ export function createWarp () {
 
   const WarpOutPortal = React.createClass({
     propTypes: {
-      children: React.PropTypes.node,
-      warpId: React.PropTypes.string
+      children: PropTypes.node,
+      warpId: PropTypes.string
     },
     childContextTypes: {
-      warpSource: React.PropTypes.object
+      warpSource: PropTypes.object
     },
     getChildContext () {
       return { warpSource: this.props.warpSource }

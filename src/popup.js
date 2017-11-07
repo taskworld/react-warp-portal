@@ -1,22 +1,23 @@
 import calculateChildPosition from 'positioning-strategy'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 import withWarpSourceBoundingClientRect from './withWarpSourceBoundingClientRect'
 
 export const popup = (BaseComponent) => (
   withWarpSourceBoundingClientRect(React.createClass({
     propTypes: {
-      strategy: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.func
+      strategy: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.func
       ]),
-      gap: React.PropTypes.number,
-      bindingY: React.PropTypes.oneOf([
+      gap: PropTypes.number,
+      bindingY: PropTypes.oneOf([
         'top', 'bottom'
       ]),
       // from withWarpSourceBoundingClientRect
-      warpSourceBoundingClientRect: React.PropTypes.object
+      warpSourceBoundingClientRect: PropTypes.object
     },
     getDefaultProps () {
       return {
