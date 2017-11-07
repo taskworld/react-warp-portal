@@ -1,8 +1,10 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
+import PropTypes from 'prop-types'
 
-export const withWarpSourceBoundingClientRect = (BaseComponent) => React.createClass({
+export const withWarpSourceBoundingClientRect = (BaseComponent) => createReactClass({
   contextTypes: {
-    warpSource: React.PropTypes.object
+    warpSource: PropTypes.object
   },
   getInitialState () {
     return { top: 0, left: 0, width: 0, height: 0, bottom: 0, right: 0 }

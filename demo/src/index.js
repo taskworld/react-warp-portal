@@ -1,11 +1,12 @@
 import React from 'react'
 import { render } from 'react-dom'
+import createReactClass from 'create-react-class'
 
 import { createWarp, popup } from '../../src'
 
 const { WarpPortal, WarpDestination } = createWarp()
 
-const Menu = React.createClass({
+const Menu = createReactClass({
   getInitialState () {
     return { items: [ 'Hello!', 'World!!' ] }
   },
@@ -31,7 +32,7 @@ const Menu = React.createClass({
 const PopupMenu = popup(Menu)
 const MenuItem = ({ children }) => <div>{children}</div>
 
-const Demo = React.createClass({
+const Demo = createReactClass({
   getInitialState () {
     return { menu: false }
   },
