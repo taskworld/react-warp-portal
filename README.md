@@ -1,6 +1,5 @@
 # <img src="https://i.imgur.com/7Tv7sKw.png" alt="react-warp-portal" />
 
-[![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
@@ -55,9 +54,6 @@ The rendered content is entangled with the WarpSource.
 You can access `this.context.warpSource` to obtain the DOM node.
 This allows positioning such as tooltips.
 
-
-[build-badge]: https://img.shields.io/travis/taskworld/react-warp-portal/master.svg?style=flat-square
-[build]: https://travis-ci.org/taskworld/react-warp-portal
 
 [npm-badge]: https://img.shields.io/npm/v/react-warp-portal.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/react-warp-portal
