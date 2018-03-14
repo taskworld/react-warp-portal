@@ -1,3 +1,6 @@
+import 'es6-map/implement'
+import 'es6-set/implement'
+
 import assert from 'assert'
 import React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'

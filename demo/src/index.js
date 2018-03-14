@@ -5,13 +5,19 @@ import { createWarp, popup } from '../../src'
 
 const { WarpPortal, WarpDestination } = createWarp()
 
-const Menu = React.createClass({
-  getInitialState () {
-    return { items: [ 'Hello!', 'World!!' ] }
-  },
+class Menu extends React.PureComponent {
+  constructor (props) {
+    super(props)
+
+    this.state = { items: [ 'Hello!', 'World!!' ] }
+
+    this.moar = this.moar.bind(this)
+  }
+
   componentDidUpdate () {
     this.props.onRepositionNeeded()
-  },
+  }
+
   render () {
     return (
       <div style={{ border: '2px solid #543', background: '#faf9f8' }}>
@@ -20,24 +26,38 @@ const Menu = React.createClass({
         <MenuItem><a href='javascript://' onClick={this.moar}>Add new item!!</a></MenuItem>
       </div>
     )
-  },
+  }
+
   moar () {
     this.setState(state => ({
       items: [ ...state.items, 'New item ' + new Date() ]
     }))
   }
-})
+}
 
 const PopupMenu = popup(Menu)
-const MenuItem = ({ children }) => <div>{children}</div>
 
-const Demo = React.createClass({
-  getInitialState () {
-    return { menu: false }
-  },
+class MenuItem extends React.PureComponent {
+  render () {
+    return (
+      <div>{this.props.children}</div>
+    )
+  }
+}
+
+class Demo extends React.PureComponent {
+  constructor (props) {
+    super(props)
+
+    this.state = { menu: false }
+
+    this.onButtonClick = this.onButtonClick.bind(this)
+  }
+
   onButtonClick () {
     this.setState(state => ({ menu: !state.menu }))
-  },
+  }
+
   render () {
     return (
       <div>
@@ -66,6 +86,6 @@ const Demo = React.createClass({
       </div>
     )
   }
-})
+}
 
 render(<Demo />, document.querySelector('#demo'))

@@ -1,41 +1,33 @@
 import calculateChildPosition from 'positioning-strategy'
+import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
 import withWarpSourceBoundingClientRect from './withWarpSourceBoundingClientRect'
 
-export const popup = (BaseComponent) => (
-  withWarpSourceBoundingClientRect(React.createClass({
-    propTypes: {
-      strategy: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.func
-      ]),
-      gap: React.PropTypes.number,
-      bindingY: React.PropTypes.oneOf([
-        'top', 'bottom'
-      ]),
-      // from withWarpSourceBoundingClientRect
-      warpSourceBoundingClientRect: React.PropTypes.object
-    },
-    getDefaultProps () {
-      return {
-        bindingY: 'top'
-      }
-    },
-    getInitialState () {
-      return { left: 0, top: 0, calculated: false }
-    },
+export const popup = (BaseComponent) => {
+  class WrappedComponent extends React.PureComponent {
+    constructor (props) {
+      super(props)
+
+      this.state = { left: 0, top: 0, calculated: false }
+
+      this.reposition = this.reposition.bind(this)
+    }
+
     componentDidMount () {
       window.requestAnimationFrame(this.reposition)
       window.addEventListener('resize', this.reposition)
-    },
+    }
+
     componentWillUnmount () {
       window.removeEventListener('resize', this.reposition)
-    },
+    }
+
     componentDidUpdate () {
       this.reposition()
-    },
+    }
+
     reposition () {
       const parentRect = this.props.warpSourceBoundingClientRect
       if (parentRect.width === 0 && parentRect.height === 0) {
@@ -56,7 +48,8 @@ export const popup = (BaseComponent) => (
       ) {
         this.setState(targetState)
       }
-    },
+    }
+
     render () {
       const getBottomPositionFromTop = (top, element) => {
         const childRect = ReactDOM.findDOMNode(element).getBoundingClientRect()
@@ -81,7 +74,26 @@ export const popup = (BaseComponent) => (
         </div>
       )
     }
-  }))
-)
+  }
+
+  WrappedComponent.propTypes = {
+    strategy: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func
+    ]),
+    gap: PropTypes.number,
+    bindingY: PropTypes.oneOf([
+      'top', 'bottom'
+    ]),
+    // from withWarpSourceBoundingClientRect
+    warpSourceBoundingClientRect: PropTypes.object
+  }
+
+  WrappedComponent.defaultProps = {
+    bindingY: 'top'
+  }
+
+  return withWarpSourceBoundingClientRect(WrappedComponent)
+}
 
 export default popup

@@ -19,15 +19,18 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "positioning-strategy": "^2.1.0"
+    "positioning-strategy": "^2.1.0",
+    "prop-types": "^15.6.1"
   },
   "peerDependencies": {
-    "react": "15.x"
+    "react": "15.x || 16.x"
   },
   "devDependencies": {
+    "es6-map": "^0.1.5",
+    "es6-set": "^0.1.5",
     "nwb": "0.10.x",
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "standard": "^7.1.1"
   },
   "author": "",
