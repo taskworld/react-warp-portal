@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 export const withWarpSourceBoundingClientRect = (BaseComponent) => {
@@ -55,7 +56,7 @@ export const withWarpSourceBoundingClientRect = (BaseComponent) => {
   }
 
   WrappedComponent.contextTypes = {
-    warpSource: React.PropTypes.object
+    warpSource: PropTypes.object
   }
 
   return WrappedComponent

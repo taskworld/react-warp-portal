@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -61,8 +62,8 @@ export function createWarp () {
   }
 
   WarpPortal.propTypes = {
-    children: React.PropTypes.node,
-    content: React.PropTypes.node
+    children: PropTypes.node,
+    content: PropTypes.node
   }
 
   class WarpOutPortal extends React.PureComponent {
@@ -91,12 +92,12 @@ export function createWarp () {
   }
 
   WarpOutPortal.propTypes = {
-    children: React.PropTypes.node,
-    warpId: React.PropTypes.string
+    children: PropTypes.node,
+    warpId: PropTypes.string
   }
 
   WarpOutPortal.childContextTypes = {
-    warpSource: React.PropTypes.object
+    warpSource: PropTypes.object
   }
 
   class WarpDestination extends React.PureComponent {
