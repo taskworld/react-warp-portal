@@ -34,8 +34,8 @@ jobs:
           key: npm-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-      # - run:
-      #     command: npm publish
+      - run:
+          command: npm publish
 
 workflows:
   version: 2
@@ -49,4 +49,4 @@ workflows:
             branches:
               only: master
             tags:
-              only: /v\d+\.\d+/
+              only: /v\d+\.\d+\.\d+/
