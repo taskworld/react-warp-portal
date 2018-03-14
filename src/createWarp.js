@@ -66,7 +66,7 @@ export function createWarp () {
     content: PropTypes.node
   }
 
-  class WarpOutPortal extends React.PureComponent {
+  class WarpOutPortal extends React.Component {
     constructor (props) {
       super(props)
 
