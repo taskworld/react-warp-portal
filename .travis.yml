@@ -15,7 +15,7 @@ branches:
   - master
   - /v\d+\.\d+/
 before_deploy:
-- npm install -g nwb@0.10.0
+- npm install
 deploy:
   provider: npm
   email: thai.p+bot@taskworld.com
