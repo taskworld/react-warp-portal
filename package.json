@@ -1,6 +1,6 @@
 {
   "name": "react-warp-portal",
-  "version": "3.0.5-alpha",
+  "version": "3.0.7-alpha",
   "description": "react-warp-portal React component",
   "main": "lib/index.js",
   "jsnext:main": "es6/index.js",
