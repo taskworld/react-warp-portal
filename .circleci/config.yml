@@ -1,0 +1,52 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/react-warp-portal
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - npm-cache-{{ checksum "package.json" }}
+            - npm-cache-
+      - run: npm install
+      - save_cache:
+          key: npm-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          command: |
+            npm test
+            cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
+            cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  deploy:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - npm-cache-{{ checksum "package.json" }}
+            - npm-cache-
+      - run: npm install
+      - save_cache:
+          key: npm-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      # - run:
+      #     command: npm publish
+
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /v\d+\.\d+/
