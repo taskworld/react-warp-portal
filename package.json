@@ -16,7 +16,7 @@
     "start": "nwb serve",
     "test": "nwb test",
     "test:watch": "nwb test --server",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "dependencies": {
     "positioning-strategy": "^2.1.0",
