@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/react-warp-portal
+    steps:
+      - checkout
+      - run:
+          command: |
+            npm install codecov.io coveralls
+            npm test
+            cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
+            cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  # build:
+  #   branches:
+  #     only:
+  #       - master
+  #       - /v\d+\.\d+/
+  #   docker:
+  #     - image: circleci/node:8-browsers
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         command: |
+  #           npm install
+  #           npm publish
