@@ -27,7 +27,7 @@
     "react": "15.x || 16.x"
   },
   "devDependencies": {
-    "codecov.io": "^0.1.6",
+    "codecov": "^3.1.0",
     "coveralls": "^3.0.0",
     "es6-map": "^0.1.5",
     "es6-set": "^0.1.5",
