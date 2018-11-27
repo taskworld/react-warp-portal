@@ -1,11 +1,12 @@
 module.exports = {
   type: 'react-component',
-  build: {
-    externals: {
-      'react': 'React'
-    },
-    global: 'ReactWarpPortal',
-    jsNext: true,
-    umd: true
+  npm: {
+    esModules: true,
+    umd: {
+      global: 'ReactWarpPortal',
+      externals: {
+        'react': 'React'
+      }
+    }
   }
 }
